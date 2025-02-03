@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 export interface Call {
   id: string
   userId: string
@@ -6,7 +8,7 @@ export interface Call {
   to: string
   status: 'pending' | 'confirmed' | 'urgent' | string
   duration: number
-  timestamp: any // Firebase Timestamp
+  timestamp: Timestamp
   transcription?: string
   voicemailUrl?: string
   notes?: string
@@ -14,6 +16,7 @@ export interface Call {
     date: any // Firebase Timestamp
     notes?: string
   }
+  scheduled?: Timestamp
 }
 
 export interface CallFilters {

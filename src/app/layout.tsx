@@ -5,8 +5,11 @@ import { AuthProvider } from '@/lib/contexts/AuthContext'
 import { SearchProvider } from '@/lib/contexts/SearchContext'
 import { ThemeProvider } from '@/lib/contexts/ThemeContext'
 import { Toaster } from 'react-hot-toast'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const inter = Inter({ subsets: ['latin'] })
+
+const queryClient = new QueryClient()
 
 export default function RootLayout({
   children,
@@ -19,13 +22,15 @@ export default function RootLayout({
         <meta name="color-scheme" content="light dark" />
       </head>
       <body className={inter.className}>
-        <AuthProvider>
-          <ThemeProvider>
-            <SearchProvider>
-              <AppLayout>{children}</AppLayout>
-            </SearchProvider>
-          </ThemeProvider>
-        </AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <ThemeProvider>
+              <SearchProvider>
+                <AppLayout>{children}</AppLayout>
+              </SearchProvider>
+            </ThemeProvider>
+          </AuthProvider>
+        </QueryClientProvider>
         <Toaster />
       </body>
     </html>

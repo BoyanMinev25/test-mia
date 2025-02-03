@@ -1,4 +1,3 @@
-
 import { createParser } from 'eventsource-parser'
 
 export class OpenAIStream {
@@ -30,6 +29,8 @@ export class OpenAIStream {
           }
         }
       })
+
+      const decoder = new TextDecoder()
 
       for await (const chunk of response.body) {
         parser.feed(decoder.decode(chunk))

@@ -14,7 +14,7 @@ import {
   LogOut
 } from 'lucide-react'
 
-export default function Navigation() {
+export function Navigation({ variant }: { variant: 'desktop' | 'mobile' }) {
   const { user, signOut } = useAuth()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
@@ -45,7 +45,7 @@ export default function Navigation() {
   }, [])
 
   return (
-    <nav className="bg-gray-50 dark:bg-gray-800 shadow-lg">
+    <nav className={variant === 'desktop' ? 'hidden md:flex' : 'md:hidden'}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between h-16">
           {/* Left side - Logo only */}

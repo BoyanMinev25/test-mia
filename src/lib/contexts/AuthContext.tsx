@@ -15,6 +15,7 @@ import { auth } from "../firebase/firebase";
 import { useRouter, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Bot } from "lucide-react";
+import Logger from '../utils/logger'
 
 interface AuthContextType {
   user: User | null;
@@ -50,7 +51,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (user) {
           setUser(user);
           const idToken = await user.getIdToken();
-          document.cookie = `__session=${idToken}; path=/; max-age=3600; SameSite=Lax`;
+          await fetch('/api/session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idToken })
+          });
 
           // Only redirect if we're on the login page
           if (pathname === '/login') {
@@ -59,7 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           }
         } else {
           setUser(null);
-          document.cookie = '__session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+          await fetch('/api/session', { method: 'DELETE' });
 
           // Only redirect to login if not already there and not on auth pages
           if (pathname !== '/login' && !pathname.startsWith('/auth/')) {
@@ -68,7 +73,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           }
         }
       } catch (error) {
-        console.error('Auth state change error:', error);
+        Logger.error('Auth state change error:', error);
       } finally {
         if (mounted) {
           // Always set loading to false after auth state is handled
