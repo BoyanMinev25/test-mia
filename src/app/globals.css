@@ -1,0 +1,259 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+  }
+
+  /* Form elements */
+  input, select, textarea {
+    @apply bg-white dark:bg-gray-800 
+           text-gray-900 dark:text-gray-100 
+           border-gray-200 dark:border-gray-700
+           focus:border-primary-500 dark:focus:border-primary-400
+           focus:ring-primary-500 dark:focus:ring-primary-400;
+  }
+
+  /* Cards and containers */
+  .card {
+    @apply bg-white dark:bg-gray-800 
+           shadow-sm
+           border border-gray-200 dark:border-gray-700;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply bg-gray-100 dark:bg-gray-700
+           text-gray-900 dark:text-gray-100
+           hover:bg-gray-200 dark:hover:bg-gray-600
+           border border-gray-200 dark:border-gray-600;
+  }
+
+  .btn-primary {
+    @apply bg-primary-500 dark:bg-primary-600
+           text-white
+           hover:bg-primary-600 dark:hover:bg-primary-700
+           border-primary-500 dark:border-primary-600;
+  }
+}
+
+/* Transitions */
+.transition-colors {
+  @apply transition-all duration-200;
+}
+
+/* Dark mode transition */
+html.dark {
+  color-scheme: dark;
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Add these styles for the iOS-style picker */
+.mask-gradient {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 20%,
+    black 80%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 20%,
+    black 80%,
+    transparent
+  );
+}
+
+.snap-y {
+  scroll-snap-type: y mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
+
+/* Add to your existing styles */
+.tooltip-wrapper:hover {
+  z-index: 50;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Update the tooltip styles */
+.relative.inline-block > div:hover > div {
+  display: block;
+}
+
+/* Add transition for icon hover */
+.relative.inline-block svg {
+  transition: color 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.2s ease-out;
+}
+
+/* Add these styles to customize the DayPicker */
+.rdp {
+  position: relative !important;
+  width: 320px !important;
+}
+
+.rdp-months {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+.rdp-month {
+  width: 100% !important;
+}
+
+.rdp-table {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* Ensure buttons are fully opaque in light mode */
+.rdp-button:not(.rdp-day_selected) {
+  background-color: white !important;
+  opacity: 1 !important;
+}
+
+.dark .rdp-button:not(.rdp-day_selected) {
+  background-color: transparent !important;
+}
+
+.rdp-day {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 9999px !important;
+  font-size: 0.875rem !important;
+}
+
+.rdp-day_selected {
+  background-color: var(--color-primary-500) !important;
+  color: white !important;
+  font-weight: 500 !important;
+}
+
+.rdp-day_selected:hover {
+  background-color: var(--color-primary-600) !important;
+}
+
+.rdp-day:hover:not(.rdp-day_selected) {
+  background-color: var(--color-primary-50) !important;
+}
+
+.dark .rdp-day:hover:not(.rdp-day_selected) {
+  background-color: var(--color-primary-900/50) !important;
+}
+
+.rdp-head_cell {
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  height: 40px !important;
+}
+
+.rdp-nav {
+  padding: 0.5rem !important;
+}
+
+.rdp-nav_button {
+  width: 28px !important;
+  height: 28px !important;
+  padding: 0 !important;
+  border-radius: 6px !important;
+}
+
+.rdp-caption {
+  padding: 0.5rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+}
+
+/* Calendar weekday text colors */
+.rdp-weekday {
+  color: #000000 !important;
+}
+
+.dark .rdp-weekday {
+  color: #ffffff !important;
+}
+
+/* If needed, we can also target the specific element more precisely */
+th[scope="col"].rdp-weekday {
+  color: #000000 !important;
+}
+
+.dark th[scope="col"].rdp-weekday {
+  color: #ffffff !important;
+}
+
+@keyframes enter {
+  0% { transform: translateY(100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes leave {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+.animate-enter {
+  animation: enter 0.2s ease-out;
+}
+
+.animate-leave {
+  animation: leave 0.15s ease-in forwards;
+}
